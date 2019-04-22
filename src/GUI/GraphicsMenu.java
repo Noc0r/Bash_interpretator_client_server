@@ -37,7 +37,7 @@ public class GraphicsMenu
         events();
     }
 
-    public void events()
+    private void events()
     {
         quit.addActionListener(new ActionListener() {
             @Override
@@ -47,9 +47,22 @@ public class GraphicsMenu
                     frame.dispose();
             }
         });
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quit.doClick();
+            }
+        });
+        clientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GraphicsClient g = new GraphicsClient();
+
+            }
+        });
     }
 
-    public void init()
+    private void init()
     {
         frame = new JFrame("Quite Fox(remote)");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

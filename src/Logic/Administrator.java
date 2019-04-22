@@ -1,4 +1,6 @@
 package Logic;
 
-public class Administrator {
+public class Administrator
+{
+
 }

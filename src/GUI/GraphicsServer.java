@@ -1,4 +1,6 @@
 package GUI;
 
-public class GraphicsServer {
+public class GraphicsServer
+{
+
 }

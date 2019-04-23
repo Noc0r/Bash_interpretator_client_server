@@ -1,11 +1,16 @@
 package GUI;
 
 import GUI.Styles.Style;
+import Logic.Administrator;
+import Logic.Server;
+import Structs.SecurityLevel;
+import Structs.ServerInfo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class GraphicsMenu
 {
@@ -56,8 +61,16 @@ public class GraphicsMenu
         clientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GraphicsClient g = new GraphicsClient();
-
+                GraphicsClient.main(new String[]{""});
+            }
+        });
+        serverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Random random = new Random();
+                ServerInfo info = new ServerInfo("Noc0r",random.nextInt(10),"111", SecurityLevel.NORMAL);
+                Administrator.createServer(info);
+                System.out.println(Administrator.getServers().size());
             }
         });
     }

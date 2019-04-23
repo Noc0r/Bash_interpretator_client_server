@@ -5,11 +5,12 @@ import java.io.*;
 public class BashExecutor 
 {
     File commands;
-    public void executeCommands() throws IOException,InterruptedException {
+    //TO DO: need redirect output to the client object-reciever
+    public void executeCommands(String command) throws IOException,InterruptedException {
         try {
-            commands = createTempScript();
+            commands = createTempScript(command);
             ProcessBuilder pb = new ProcessBuilder("bash", commands.toString());
-            pb.inheritIO();
+            pb.inheritIO();//!!!
             Process process = pb.start();
             process.waitFor();
         } finally {
@@ -17,15 +18,25 @@ public class BashExecutor
         }
     }
 
-    public File createTempScript() throws IOException {
+    public File createTempScript(String command) throws IOException {
         File commands = File.createTempFile("cmds", null);
         Writer streamWriter = new OutputStreamWriter(
                             new FileOutputStream(commands));
         PrintWriter printWriter = new PrintWriter(streamWriter);
-        printWriter.println("#!/bin/bash");
-        printWriter.println("cd bin");
-        printWriter.println("ls");
+        printWriter.println(command);
         printWriter.close();
         return commands;
+    }
+    public static void main(String[] args)
+    {
+        BashExecutor exec = new BashExecutor();
+        try
+        {
+            exec.executeCommands("cd /home/noc0r\nls");
+        }
+        catch (IOException|InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

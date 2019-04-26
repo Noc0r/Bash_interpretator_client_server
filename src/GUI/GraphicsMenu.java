@@ -1,16 +1,10 @@
 package GUI;
 
 import GUI.Styles.Style;
-import Logic.Administrator;
-import Logic.Server;
-import Structs.SecurityLevel;
-import Structs.ServerInfo;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 public class GraphicsMenu
 {
@@ -18,8 +12,8 @@ public class GraphicsMenu
     private JMenuBar menuBar;
     private JMenu settings;
     private JMenu info;
-    private JMenuItem active;
-    private JMenuItem list;
+    private JMenuItem serverMenu;
+    private JMenuItem clientMenu;
     private JMenuItem quit;
     private JMenuItem clientSettings;
     private JMenuItem serverSettings;
@@ -67,10 +61,19 @@ public class GraphicsMenu
         serverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Random random = new Random();
-                ServerInfo info = new ServerInfo("Noc0r",random.nextInt(10),"111", SecurityLevel.NORMAL);
-                Administrator.createServer(info);
-                System.out.println(Administrator.getServers().size());
+                GraphicsServer.main(new String[]{""});
+            }
+        });
+        serverMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                serverButton.doClick();
+            }
+        });
+        clientMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clientButton.doClick();
             }
         });
     }
@@ -84,14 +87,14 @@ public class GraphicsMenu
         frame.getContentPane().setLayout(null);
         frame.setJMenuBar(menuBar);
         settings = new JMenu("Settings");
-        info = new JMenu("Information");
+        info = new JMenu("Options");
         menuBar.add(info);
         menuBar.add(settings);
-        active = new JMenuItem("Active connections");
-        list = new JMenuItem("Active users");
+        serverMenu = new JMenuItem("Create server");
+        clientMenu = new JMenuItem("Create client");
         quit = new JMenuItem("Quit");
-        info.add(active);
-        info.add(list);
+        info.add(serverMenu);
+        info.add(clientMenu);
         info.add(quit);
         clientSettings = new JMenuItem("Audio");
         serverSettings = new JMenuItem("Styles");
@@ -115,7 +118,12 @@ public class GraphicsMenu
 
     public static void main(String[] args)
     {
-        GraphicsMenu menu = new GraphicsMenu();
-        menu.frame.setVisible(true);
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GraphicsMenu menu = new GraphicsMenu();
+                menu.frame.setVisible(true);
+            }
+        });
     }
 }

@@ -86,11 +86,8 @@ public class InputDialog extends JDialog{
 
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        EventQueue.invokeLater(()-> {
                 InputDialog window = new InputDialog(null,"1245");
-            }
         });
     }
 }

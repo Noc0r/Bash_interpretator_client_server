@@ -118,12 +118,9 @@ public class GraphicsMenu
 
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        EventQueue.invokeLater(()->{
                 GraphicsMenu menu = new GraphicsMenu();
                 menu.frame.setVisible(true);
-            }
         });
     }
 }

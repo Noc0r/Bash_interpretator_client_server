@@ -2,6 +2,7 @@ package GUI;
 
 import GUI.Styles.Style;
 import Logic.Administrator;
+import Logic.Client;
 import Logic.Functionals.AdminFunctional;
 import Structs.Configuration;
 import Structs.ServerInfo;
@@ -50,7 +51,12 @@ public class GraphicsClient
         connect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                EventQueue.invokeLater(()-> {
+                        if(!servers.isSelectionEmpty())
+                        {
+                            ClientWorkWindow window = new ClientWorkWindow(servers.getSelectedValue().getPassword());
+                        }
+                });
             }
         });
     }

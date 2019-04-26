@@ -1,24 +1,21 @@
 package GUI;
 
 import GUI.Styles.Style;
-import Logic.Functionals.AdminFunctional;
 import Logic.Server;
-import Structs.Configuration;
-import Structs.ServerInfo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.Naming;
 
 public class GraphicsServer
 {
     private JFrame frame;
-    JButton okBut = new JButton("OK");
-    JTextArea nameArea = new JTextArea();
-    JTextArea conArea = new JTextArea();
-    JTextArea pasArea = new JTextArea();
+    private JButton okBut = new JButton("OK");
+    private JTextArea nameArea = new JTextArea();
+    private JTextArea conArea = new JTextArea();
+    private JTextArea pasArea = new JTextArea();
+    private Server s;
 
     public JFrame getFrame() {
         return frame;
@@ -40,7 +37,7 @@ public class GraphicsServer
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Server s = new Server(nameArea.getText(),
+                    s = new Server(nameArea.getText(),
                             Integer.parseInt(conArea.getText()),
                             pasArea.getText());
                     s.start();
@@ -85,12 +82,9 @@ public class GraphicsServer
     }
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        EventQueue.invokeLater(()-> {
                 GraphicsServer cl = new GraphicsServer();
                 cl.frame.setVisible(true);
-            }
         });
     }
 }

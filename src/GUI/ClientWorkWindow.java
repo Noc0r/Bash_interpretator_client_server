@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.Styles.Style;
+import Logic.Client;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;
@@ -13,6 +14,7 @@ public class ClientWorkWindow{
     JFrame frame;
     JButton ok = new JButton("Ok");
     JTextPane cmd = new JTextPane();
+    Client cl;
     public ClientWorkWindow(String password)
     {
         this();
@@ -49,14 +51,13 @@ public class ClientWorkWindow{
         frame.setBounds(50,50,500,430);
         cmd.setBackground(Style.cmd_background);
         StyleContext sc = StyleContext.getDefaultStyleContext();
-        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Style.textStyle);
-        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
-        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        AttributeSet asset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Style.textStyle);
+        asset = sc.addAttribute(asset, StyleConstants.FontFamily, "Lucida Console");
+        asset = sc.addAttribute(asset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
         int len = cmd.getDocument().getLength();
         cmd.setCaretPosition(len);
-        cmd.setCharacterAttributes(aset, false);
+        cmd.setCharacterAttributes(asset, false);
         cmd.setBounds(30,30,450,300);
-        cmd.replaceSelection(">Start work\n");
         ok.setBounds(200,350,100,30);
         frame.add(ok);
         frame.add(cmd);
@@ -64,15 +65,8 @@ public class ClientWorkWindow{
 
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        EventQueue.invokeLater(()-> {
                 ClientWorkWindow window = new ClientWorkWindow("1234");
-                /*if(args.length!=0)
-                    window = new ClientWorkWindow(args[0]);
-                else
-                    window = new ClientWorkWindow();*/
-            }
         });
     }
 }

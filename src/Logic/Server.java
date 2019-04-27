@@ -5,6 +5,7 @@ import Logic.Functionals.ServerFunctional;
 import Structs.Configuration;
 import Structs.ServerInfo;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.Naming;
@@ -66,11 +67,15 @@ public class Server extends UnicastRemoteObject implements ServerFunctional, Ser
     }
 
     @Override
-    public String send(String clientID, String commands) throws RemoteException
+    public String send(String clientID, String commands)
     {
         try
         {
-            return executor.executeCommands(commands);
+            for (Client cl:users) {
+                if(cl.getClientId().equals(clientID))
+                    return executor.executeCommands(commands);
+            }
+            return "You don't have access to the server";
         }
         catch (IOException|InterruptedException e)
         {
@@ -79,24 +84,51 @@ public class Server extends UnicastRemoteObject implements ServerFunctional, Ser
         return "";
     }
 
-    @Override
-    public void addClient(Client client) throws RemoteException {
-        System.out.println(client);
-        synchronized (users) {
-            users.add(client);
+    private void updateAdmin()
+    {
+        try {
+            AdminFunctional admin = (AdminFunctional) Naming.lookup(Configuration.ADMIN_PATH);
+            for(ServerInfo s:admin.getList())
+            {
+                if(s.getId() == info.getId())
+                {
+                    admin.getList().remove(s);
+                    s.setConnections(info.getConnections());
+                    admin.getList().add(s);
+                }
+            }
+        }catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }
-        System.out.println(users.size());
-        System.out.println(client.getClientId());
     }
 
     @Override
-    public void removeClient(Client client) throws RemoteException {
+    public boolean addClient(Client client) {
+        System.out.println(client);
+        if(users.size()<info.getMaxConnections()) {
+            synchronized (users) {
+                users.add(client);
+                info.setConnections(info.getConnections() + 1);
+            }
+            updateAdmin();
+            System.out.println(users.size());
+            System.out.println(client.getClientId());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void removeClient(Client client) {
         System.out.println(client);
         synchronized (users) {
             users.removeIf((c1)->{
                 return   c1.getClientId().equals(client.getClientId());
             });
+            info.setConnections(info.getConnections()-1);
         }
+        updateAdmin();
         System.out.println(users.size());
         System.out.println(client.getClientId());
     }

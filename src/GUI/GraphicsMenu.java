@@ -2,7 +2,6 @@ package GUI;
 
 import GUI.Styles.Style;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -118,9 +117,7 @@ public class GraphicsMenu
 
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(()->{
-                GraphicsMenu menu = new GraphicsMenu();
-                menu.frame.setVisible(true);
-        });
+        GraphicsMenu menu = new GraphicsMenu();
+        menu.frame.setVisible(true);
     }
 }

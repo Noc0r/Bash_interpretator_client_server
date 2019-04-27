@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class BashExecutor implements Serializable
 {
-    File commands;
-    File output;
+    private transient static final long serialVersionUID = 1L;
+    private File commands;
+    private File output;
     //TO DO: need redirect output to the client object-reciever
     public String executeCommands(String command) throws IOException,InterruptedException {
         try {

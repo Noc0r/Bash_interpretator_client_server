@@ -1,4 +1,5 @@
 package Logic;
+import GUI.ClientWorkWindow;
 import Logic.Functionals.ServerFunctional;
 import Structs.Configuration;
 
@@ -17,9 +18,26 @@ import static Structs.Configuration.localhost;
  * */
 
 public class Client implements Serializable {
+    private transient static final long serialVersionUID = 1L;
     private String clientId="Noc0r";
     private int serverId;
-    private JFrame gui;
+    private ClientWorkWindow gui;
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
+
+    public ClientWorkWindow getGui() {
+        return gui;
+    }
+
+    public void setGui(ClientWorkWindow gui) {
+        this.gui = gui;
+    }
 
     public String getClientId()
     {
@@ -33,11 +51,14 @@ public class Client implements Serializable {
     public Client()
     {
     }
-    public Client(String clientID,int id,JFrame gui)
+
+    public Client(String clientID,int id,ClientWorkWindow gui)
     {
         clientId=clientID;
         serverId = id;
+        this.gui = gui;
     }
+
     public String request(String commands)
     {
         try {
@@ -56,10 +77,6 @@ public class Client implements Serializable {
         return "";
     }
 
-    public void dispose()
-    {
-        gui.dispose();
-    }
     @Override
     public String toString()
     {

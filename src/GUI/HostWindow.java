@@ -4,7 +4,6 @@ import GUI.Styles.Style;
 import Logic.Client;
 import Logic.Functionals.AdminFunctional;
 import Logic.Functionals.ServerFunctional;
-import Logic.Server;
 import Structs.Configuration;
 import Structs.ServerInfo;
 
@@ -12,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
 
 import static Structs.Configuration.RMI_HOSTNAME;
 import static Structs.Configuration.localhost;
@@ -79,7 +77,8 @@ public class HostWindow {
                     {
                         try {
                             Client cl =userList.getSelectedValue();
-                            cl.dispose();
+                            ClientWorkWindow fr = cl.getGui();
+                            JOptionPane.showMessageDialog(fr.getFrame(),"You was kicked by the server");
                             ServerFunctional s = (ServerFunctional) Naming.lookup(
                                     Configuration.PATH+":1098/"+Configuration.SERVER_NAME+ host.getId());
                             s.removeClient(cl);
@@ -87,7 +86,8 @@ public class HostWindow {
                         }
                         catch (Exception ex)
                         {
-                            JOptionPane.showMessageDialog(frame,ex.getMessage());
+                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(frame,ex.getStackTrace());
                         }
 
                     }
@@ -139,18 +139,13 @@ public class HostWindow {
     }
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HostWindow cl = new HostWindow(new ServerInfo("Noc0r",2,"1234"));
-                    cl.frame.setVisible(true);
-                }
-                catch (Exception e)
-                {
-                    JOptionPane.showMessageDialog(null,e.getMessage());
-                }
-            }
-        });
+        try {
+            HostWindow cl = new HostWindow(new ServerInfo("Noc0r",2,"1234"));
+            cl.frame.setVisible(true);
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
     }
 }

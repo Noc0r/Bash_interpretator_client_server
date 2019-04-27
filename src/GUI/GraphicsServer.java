@@ -5,7 +5,6 @@ import Logic.Server;
 import Structs.ServerInfo;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -87,9 +86,7 @@ public class GraphicsServer
     }
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(()-> {
-                GraphicsServer cl = new GraphicsServer();
-                cl.frame.setVisible(true);
-        });
+        GraphicsServer cl = new GraphicsServer();
+        cl.frame.setVisible(true);
     }
 }

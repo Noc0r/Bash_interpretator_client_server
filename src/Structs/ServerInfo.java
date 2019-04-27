@@ -15,7 +15,7 @@ public class ServerInfo implements Serializable
     private String host;
     private int connections;
     private int maxConnections;
-    private int id;
+    private int id=1;
     private String password;
 
     public int getMaxConnections() {
@@ -66,7 +66,7 @@ public class ServerInfo implements Serializable
 
     public ServerInfo(String host,int connections,String password)
     {
-        this.connections = connections;
+        this.maxConnections = connections;
         this.host = host;
         this.password = password;
     }
@@ -80,8 +80,10 @@ public class ServerInfo implements Serializable
             pas = "Open";
         String result="";
         result+=host + tabs.substring(0,tabs.length() - host.length())+"/";
-        String conTabs = tabs.substring(0,tabs.length()-Integer.toString(connections).length());
-        result+=connections+conTabs+"/";
+        String conTabs = tabs.substring(0,tabs.length()-
+                Integer.toString(connections).length()-
+                Integer.toString(maxConnections).length()-1);
+        result+=connections+"/"+maxConnections+conTabs+"/";
         String pasTabs = tabs.substring(0,tabs.length()-pas.length());
         result+=pas+pasTabs+"/";
         return result;

@@ -10,6 +10,6 @@ public interface AdminFunctional extends Remote
 {
     boolean createServer(ServerInfo server) throws RemoteException;
     boolean removeServer(ServerInfo server) throws RemoteException;
-    public int getFreeID() throws RemoteException;
+    int getFreeID() throws RemoteException;
     ArrayList<ServerInfo> getList() throws RemoteException;
 }

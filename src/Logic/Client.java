@@ -2,6 +2,8 @@ package Logic;
 import Logic.Functionals.ServerFunctional;
 import Structs.Configuration;
 
+import javax.swing.*;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -14,9 +16,10 @@ import static Structs.Configuration.localhost;
  * Client class, organize work with server
  * */
 
-public class Client{
+public class Client implements Serializable {
     private String clientId="Noc0r";
     private int serverId;
+    private JFrame gui;
 
     public String getClientId()
     {
@@ -30,18 +33,18 @@ public class Client{
     public Client()
     {
     }
-    public Client(String clientID,int id)
+    public Client(String clientID,int id,JFrame gui)
     {
         clientId=clientID;
         serverId = id;
     }
-    public void request(String commands)
+    public String request(String commands)
     {
         try {
             System.setProperty(RMI_HOSTNAME, localhost);
             ServerFunctional server = (ServerFunctional)Naming.lookup(
                     Configuration.PATH+":1098/"+Configuration.SERVER_NAME+ serverId);
-            System.out.println(server.send(clientId,commands));
+            return server.send(clientId,commands);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
@@ -50,10 +53,21 @@ public class Client{
             System.err.println("NotBoundException : " +
                     e.getMessage());
         }
+        return "";
+    }
+
+    public void dispose()
+    {
+        gui.dispose();
+    }
+    @Override
+    public String toString()
+    {
+        return clientId;
     }
     public static void main(String[] args)
     {
-        Client c = new Client();
+        Client c = new Client("Vasya",1,null);
         c.request("cd /home/noc0r\nls\npwd");
     }
 }

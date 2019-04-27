@@ -20,25 +20,17 @@ public class Administrator extends UnicastRemoteObject implements AdminFunctiona
     private ArrayList<ServerInfo> list = new ArrayList<>();
     private Integer id=0;
     private transient static final long serialVersionUID = 1L;
+
     public ArrayList<ServerInfo> getList() throws RemoteException{
-        return list;
-    }
-
-    public void setList(ArrayList<ServerInfo> list) throws RemoteException{
-        this.list = list;
-    }
-
-    public Integer getId() throws RemoteException{
-        return id;
-    }
-
-    public void setId(Integer id) throws RemoteException{
-        this.id = id;
+        synchronized (list) {
+            return list;
+        }
     }
 
     public boolean createServer(ServerInfo server) throws RemoteException {
         synchronized (list) {
             System.out.println("Add server by "+server.getHost());
+            System.out.println(server);
             return list.add(server);
         }
     }
@@ -50,7 +42,9 @@ public class Administrator extends UnicastRemoteObject implements AdminFunctiona
 
     @Override
     public boolean removeServer(ServerInfo server) throws RemoteException {
-        return list.remove(server);
+        synchronized (list) {
+            return list.remove(server);
+        }
     }
     @Override
     public int getFreeID() throws RemoteException

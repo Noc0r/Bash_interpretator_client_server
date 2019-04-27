@@ -54,7 +54,7 @@ public class GraphicsClient
                 EventQueue.invokeLater(()-> {
                         if(!servers.isSelectionEmpty())
                         {
-                            ClientWorkWindow window = new ClientWorkWindow(servers.getSelectedValue().getPassword());
+                            ClientWorkWindow window = new ClientWorkWindow(servers.getSelectedValue());
                         }
                 });
             }
@@ -70,6 +70,7 @@ public class GraphicsClient
         frame.setResizable(false);
         servers = new JList<>(model);
         JLabel listLabel = new JLabel("Servers");
+        listLabel.setBounds(130,10,200,30);
         JScrollPane scrollPane_2 = new JScrollPane();
         scrollPane_2.setBounds(30, 40, 260, 250);
         frame.add(scrollPane_2);
@@ -82,6 +83,7 @@ public class GraphicsClient
         update.setBounds(110,330,100,30);
         connect.setBounds(110,390,100,30);
         frame.add(update);
+        frame.add(listLabel);
         frame.add(connect);
         frame.setBounds(50,50,320,500);
     }

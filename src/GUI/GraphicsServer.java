@@ -2,6 +2,7 @@ package GUI;
 
 import GUI.Styles.Style;
 import Logic.Server;
+import Structs.ServerInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,10 +38,14 @@ public class GraphicsServer
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    s = new Server(nameArea.getText(),
+                    ServerInfo info = new ServerInfo(
+                            nameArea.getText(),
                             Integer.parseInt(conArea.getText()),
                             pasArea.getText());
+                    s = new Server(info);
                     s.start();
+                    HostWindow window = new HostWindow(info);
+                    window.getFrame().setVisible(true);
                     frame.dispose();
                 }
                 catch (Exception ex)

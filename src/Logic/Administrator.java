@@ -16,7 +16,6 @@ import static Structs.Configuration.RMI_HOSTNAME;
 
 
 public class Administrator extends UnicastRemoteObject implements AdminFunctional, Serializable {
-
     private ArrayList<ServerInfo> list = new ArrayList<>();
     private Integer id=0;
     private transient static final long serialVersionUID = 1L;

@@ -52,6 +52,11 @@ public class HostWindow {
                 try {
                     AdminFunctional adm = (AdminFunctional)Naming.lookup(Configuration.ADMIN_PATH);
                     adm.removeServer(host);
+                    for(int i=model.size()-1;i>=0;i--)
+                    {
+                        userList.setSelectedIndex(i);
+                        kick.doClick();
+                    }
                     System.out.println(adm.getList().size());
                 }
                 catch (Exception ex)

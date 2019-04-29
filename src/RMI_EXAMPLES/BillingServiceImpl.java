@@ -98,7 +98,7 @@ public class BillingServiceImpl extends UnicastRemoteObject
              * Регистрация удаленного RMI объекта BillingService
              * в реестре rmiregistry
              */
-            Registry registry = LocateRegistry.createRegistry(0);
+            Registry registry = LocateRegistry.createRegistry(1099  );
             registry.rebind(serviceName, service);
             System.out.println("Start " + serviceName);
         } catch (RemoteException e) {
